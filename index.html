@@ -110,53 +110,100 @@
     margin-bottom: 1.5rem;
   }
 
-  /* ── FILTROS ── */
+  /* ── FILTROS (estilo dropdown, Apple Store) ── */
   .filters-section {
     max-width: 900px;
     margin: 0 auto;
     padding: 0 1.25rem 1.5rem;
     display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-  .filter-row {
-    display: flex;
-    gap: 0.5rem;
+    gap: 0.6rem;
     flex-wrap: wrap;
+    position: relative;
+  }
+  .filter-dropdown { position: relative; }
+
+  .filter-chip {
+    display: flex;
     align-items: center;
-  }
-  .filter-label {
-    font-size: 0.72rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--muted);
-    min-width: 60px;
-  }
-  .chips {
-    display: flex;
     gap: 0.4rem;
-    flex-wrap: wrap;
-  }
-  .chip {
     background: var(--surface2);
     border: 1px solid var(--border);
     border-radius: 20px;
-    padding: 0.3rem 0.85rem;
-    font-size: 0.8rem;
-    color: var(--muted);
+    padding: 0.45rem 1rem;
+    font-size: 0.83rem;
+    font-weight: 500;
+    color: var(--text);
     cursor: pointer;
     transition: all 0.15s;
     font-family: inherit;
     white-space: nowrap;
   }
-  .chip:hover { border-color: var(--accent); color: var(--text); }
-  .chip.active {
-    background: var(--accent);
+  .filter-chip:hover { border-color: #444; }
+  .filter-chip.has-value {
+    background: rgba(200,241,53,0.12);
     border-color: var(--accent);
-    color: #0a0a0a;
-    font-weight: 600;
+    color: var(--accent);
   }
+  .filter-chip .chevron {
+    transition: transform 0.2s;
+    flex-shrink: 0;
+  }
+  .filter-chip.open .chevron { transform: rotate(180deg); }
+
+  .filter-panel {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.5);
+    padding: 0.5rem;
+    min-width: 180px;
+    max-height: 280px;
+    overflow-y: auto;
+    z-index: 200;
+    display: none;
+  }
+  .filter-panel.open { display: block; }
+
+  .filter-option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.55rem 0.75rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    color: var(--text);
+    cursor: pointer;
+    transition: background 0.12s;
+    font-family: inherit;
+    background: none;
+    border: none;
+    width: 100%;
+    text-align: left;
+  }
+  .filter-option:hover { background: var(--surface2); }
+  .filter-option.selected { color: var(--accent); font-weight: 600; }
+  .filter-option .check {
+    opacity: 0;
+    color: var(--accent);
+  }
+  .filter-option.selected .check { opacity: 1; }
+
+  .filter-clear-all {
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 0.45rem 1rem;
+    font-size: 0.83rem;
+    color: var(--muted);
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.15s;
+  }
+  .filter-clear-all:hover { border-color: #ff6b6b; color: #ff6b6b; }
+  .filter-clear-all.hidden { display: none; }
 
   /* ── RESULTADOS ── */
   .results-bar {
@@ -346,34 +393,7 @@
     <p>Todos los modelos disponibles — actualizado constantemente.</p>
   </section>
 
-  <section class="filters-section">
-    <div class="filter-row">
-      <span class="filter-label">Marca</span>
-      <div class="chips" id="filter-marca">
-        <button class="chip active" data-value="all">Todas</button>
-      </div>
-    </div>
-    <div class="filter-row">
-      <span class="filter-label">Talla</span>
-      <div class="chips" id="filter-talla">
-        <button class="chip active" data-value="all">Todas</button>
-      </div>
-    </div>
-    <div class="filter-row">
-      <span class="filter-label">Color</span>
-      <div class="chips" id="filter-color">
-        <button class="chip active" data-value="all">Todos</button>
-      </div>
-    </div>
-    <div class="filter-row">
-      <span class="filter-label">Estado</span>
-      <div class="chips" id="filter-disp">
-        <button class="chip active" data-value="all">Todos</button>
-        <button class="chip" data-value="si">Disponible</button>
-        <button class="chip" data-value="no">Agotado</button>
-      </div>
-    </div>
-  </section>
+  <section class="filters-section" id="filters-section"></section>
 
   <div class="results-bar">
     <span class="results-count">Mostrando <strong id="count">0</strong> modelos</span>
@@ -489,39 +509,97 @@ const productos = [
 let filtros = { marca: "all", talla: "all", color: "all", disp: "all" };
 let busqueda = "";
 
+const FILTER_DEFS = [
+  { key: "marca", label: "Marca", getValues: () => [...new Set(productos.map(p => p.marca))].sort() },
+  { key: "talla", label: "Talla", getValues: () => [...new Set(productos.flatMap(p => p.tallas))].sort((a,b) => parseFloat(a)-parseFloat(b)) },
+  { key: "color", label: "Color", getValues: () => [...new Set(productos.flatMap(p => p.colores))].sort() },
+  { key: "disp", label: "Disponible", getValues: () => ["si", "no"], display: v => v === "si" ? "Disponible" : "Agotado" },
+];
+
 function waLink(producto) {
   const msg = encodeURIComponent(`Hola! Me interesa el modelo *${producto.nombre}* (${producto.marca}) que vi en el catálogo. ¿Puedes darme más información?`);
   return `https://wa.me/${WHATSAPP}?text=${msg}`;
 }
 
-function buildChips() {
-  const marcas = [...new Set(productos.map(p => p.marca))].sort();
-  const tallas = [...new Set(productos.flatMap(p => p.tallas))].sort((a,b) => parseFloat(a)-parseFloat(b));
-  const colores = [...new Set(productos.flatMap(p => p.colores))].sort();
+function buildFilters() {
+  const container = document.getElementById("filters-section");
+  container.innerHTML = FILTER_DEFS.map(def => `
+    <div class="filter-dropdown" data-key="${def.key}">
+      <button class="filter-chip" data-key="${def.key}">
+        <span class="chip-label">${def.label}</span>
+        <svg class="chevron" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+      </button>
+      <div class="filter-panel" data-key="${def.key}">
+        <button class="filter-option selected" data-value="all">
+          <span>Todos</span><span class="check">✓</span>
+        </button>
+        ${def.getValues().map(v => `
+          <button class="filter-option" data-value="${v}">
+            <span>${def.display ? def.display(v) : v}</span><span class="check">✓</span>
+          </button>
+        `).join("")}
+      </div>
+    </div>
+  `).join("") + `<button class="filter-clear-all hidden" id="clear-all">Limpiar filtros</button>`;
 
-  function addChips(containerId, values, key) {
-    const c = document.getElementById(containerId);
-    values.forEach(v => {
-      const b = document.createElement("button");
-      b.className = "chip";
-      b.dataset.value = v;
-      b.textContent = v;
-      b.onclick = () => { filtros[key] = v; activateChip(containerId, v); render(); };
-      c.appendChild(b);
+  // toggle open/close
+  container.querySelectorAll(".filter-chip").forEach(chip => {
+    chip.addEventListener("click", e => {
+      e.stopPropagation();
+      const key = chip.dataset.key;
+      const panel = container.querySelector(`.filter-panel[data-key="${key}"]`);
+      const isOpen = panel.classList.contains("open");
+      closeAllPanels();
+      if (!isOpen) { panel.classList.add("open"); chip.classList.add("open"); }
     });
-    c.querySelector('[data-value="all"]').onclick = () => { filtros[key] = "all"; activateChip(containerId, "all"); render(); };
-  }
-
-  addChips("filter-marca", marcas, "marca");
-  addChips("filter-talla", tallas, "talla");
-  addChips("filter-color", colores, "color");
-  document.getElementById("filter-disp").querySelectorAll(".chip").forEach(b => {
-    b.onclick = () => { filtros.disp = b.dataset.value; activateChip("filter-disp", b.dataset.value); render(); };
   });
+
+  // select option
+  container.querySelectorAll(".filter-option").forEach(opt => {
+    opt.addEventListener("click", e => {
+      e.stopPropagation();
+      const key = opt.closest(".filter-panel").dataset.key;
+      filtros[key] = opt.dataset.value;
+      closeAllPanels();
+      updateFilterUI();
+      render();
+    });
+  });
+
+  document.getElementById("clear-all").addEventListener("click", () => {
+    Object.keys(filtros).forEach(k => filtros[k] = "all");
+    updateFilterUI();
+    render();
+  });
+
+  document.addEventListener("click", closeAllPanels);
 }
 
-function activateChip(containerId, value) {
-  document.getElementById(containerId).querySelectorAll(".chip").forEach(b => b.classList.toggle("active", b.dataset.value === value));
+function closeAllPanels() {
+  document.querySelectorAll(".filter-panel.open").forEach(p => p.classList.remove("open"));
+  document.querySelectorAll(".filter-chip.open").forEach(c => c.classList.remove("open"));
+}
+
+function updateFilterUI() {
+  FILTER_DEFS.forEach(def => {
+    const value = filtros[def.key];
+    const chip = document.querySelector(`.filter-chip[data-key="${def.key}"]`);
+    const panel = document.querySelector(`.filter-panel[data-key="${def.key}"]`);
+    const label = chip.querySelector(".chip-label");
+
+    panel.querySelectorAll(".filter-option").forEach(o => o.classList.toggle("selected", o.dataset.value === value));
+
+    if (value === "all") {
+      chip.classList.remove("has-value");
+      label.textContent = def.label;
+    } else {
+      chip.classList.add("has-value");
+      label.textContent = def.display ? def.display(value) : value;
+    }
+  });
+
+  const anyActive = Object.values(filtros).some(v => v !== "all");
+  document.getElementById("clear-all").classList.toggle("hidden", !anyActive);
 }
 
 function render() {
@@ -577,7 +655,7 @@ function render() {
 document.getElementById("search").addEventListener("input", e => { busqueda = e.target.value; render(); });
 document.getElementById("footer-wa").href = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent("Hola! Vi su catálogo y quiero más información.")}`;
 
-buildChips();
+buildFilters();
 render();
 </script>
 </body>
