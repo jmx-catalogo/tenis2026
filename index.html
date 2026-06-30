@@ -706,8 +706,8 @@ const productos = [
     id: 1,
     marca: "Onitsuka Tiger",
     nombre: "Mexico 66",
+    color: "Amarillo/Negro",
     tallas: ["26"],
-    colores: ["Amarillo", "Negro"],
     precio: 1850,
     disponible: true,
     descripcion: "El modelo que puso a Onitsuka Tiger en el radar. Con un diseño estilizado, colorway icónico y alta comodidad desde el primer uso.",
@@ -727,12 +727,12 @@ let busqueda = "";
 const FILTER_DEFS = [
   { key: "marca", label: "Marca", getValues: () => [...new Set(productos.map(p => p.marca))].sort() },
   { key: "talla", label: "Talla", getValues: () => [...new Set(productos.flatMap(p => p.tallas))].sort((a,b) => parseFloat(a)-parseFloat(b)) },
-  { key: "color", label: "Color", getValues: () => [...new Set(productos.flatMap(p => p.colores))].sort() },
+  { key: "color", label: "Color", getValues: () => [...new Set(productos.flatMap(p => p.color.split("/").map(c => c.trim())))].sort() },
   { key: "disp", label: "Disponible", getValues: () => ["si", "no"], display: v => v === "si" ? "Disponible" : "Agotado" },
 ];
 
 function waLink(producto) {
-  const msg = encodeURIComponent(`Hola! Me interesa el modelo *${producto.nombre}* (${producto.marca}) que vi en el catálogo. ¿Puedes darme más información?`);
+  const msg = encodeURIComponent(`Hola! Me interesa el modelo ${producto.nombre} (${producto.marca}) color ${producto.color} que vi en el catálogo. ¿Puedes darme más información?`);
   return `https://wa.me/${WHATSAPP}?text=${msg}`;
 }
 
@@ -822,7 +822,7 @@ function render() {
   const filtered = productos.filter(p => {
     if (filtros.marca !== "all" && p.marca !== filtros.marca) return false;
     if (filtros.talla !== "all" && !p.tallas.includes(filtros.talla)) return false;
-    if (filtros.color !== "all" && !p.colores.includes(filtros.color)) return false;
+    if (filtros.color !== "all" && !p.color.split("/").map(c => c.trim()).includes(filtros.color)) return false;
     if (filtros.disp !== "all" && (p.disponible ? "si" : "no") !== filtros.disp) return false;
     if (q && !p.nombre.toLowerCase().includes(q) && !p.marca.toLowerCase().includes(q)) return false;
     return true;
