@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JMx Tenis</title>
+<style>
+  /* ── FUENTES ── */
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #0a0a0a;
+    --surface: #141414;
+    --surface2: #1e1e1e;
+    --border: #2a2a2a;
+    --text: #f0f0f0;
+    --muted: #888;
+    --accent: #c8f135;
+    --accent-dark: #a8d020;
+    --wa: #25d366;
+    --radius: 12px;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10,10,10,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 1.25rem;
+  }
+  .header-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+    gap: 1rem;
+  }
+  .logo {
+    font-size: 1.3rem;
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    color: var(--text);
+    white-space: nowrap;
+  }
+  .logo span { color: var(--accent); }
+
+  /* ── BARRA DE BÚSQUEDA ── */
+  .search-wrap {
+    flex: 1;
+    max-width: 340px;
+    position: relative;
+  }
+  .search-wrap svg {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--muted);
+    pointer-events: none;
+  }
+  #search {
+    width: 100%;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-size: 0.9rem;
+    padding: 0.55rem 1rem 0.55rem 2.5rem;
+    outline: none;
+    transition: border-color 0.2s;
+    font-family: inherit;
+  }
+  #search::placeholder { color: var(--muted); }
+  #search:focus { border-color: var(--accent); }
+
+  /* ── HERO ── */
+  .hero {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2.5rem 1.25rem 1.5rem;
+  }
+  .hero h1 {
+    font-size: clamp(2rem, 6vw, 3.2rem);
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    line-height: 1.05;
+    margin-bottom: 0.5rem;
+  }
+  .hero h1 em {
+    font-style: normal;
+    color: var(--accent);
+  }
+  .hero p {
+    color: var(--muted);
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+  }
+
+  /* ── FILTROS ── */
+  .filters-section {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 1.25rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .filter-row {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .filter-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    min-width: 60px;
+  }
+  .chips {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+  }
+  .chip {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 0.3rem 0.85rem;
+    font-size: 0.8rem;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: inherit;
+    white-space: nowrap;
+  }
+  .chip:hover { border-color: var(--accent); color: var(--text); }
+  .chip.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #0a0a0a;
+    font-weight: 600;
+  }
+
+  /* ── RESULTADOS ── */
+  .results-bar {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 1.25rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .results-count {
+    font-size: 0.82rem;
+    color: var(--muted);
+  }
+  .results-count strong { color: var(--accent); }
+
+  /* ── GRID DE PRODUCTOS ── */
+  .grid {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 1.25rem 6rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1rem;
+  }
+
+  /* ── TARJETA ── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: transform 0.2s, border-color 0.2s;
+    display: flex;
+    flex-direction: column;
+  }
+  .card:hover {
+    transform: translateY(-3px);
+    border-color: #444;
+  }
+  .card-img {
+    aspect-ratio: 1 / 1;
+    background: var(--surface2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .card-img .placeholder-icon {
+    font-size: 3rem;
+    opacity: 0.18;
+  }
+  .card-body {
+    padding: 0.9rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    flex: 1;
+  }
+  .card-brand {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+  }
+  .card-name {
+    font-size: 0.95rem;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+  .card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    margin-top: 0.2rem;
+  }
+  .tag {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-size: 0.72rem;
+    padding: 0.15rem 0.5rem;
+    color: var(--muted);
+  }
+  .card-footer {
+    padding: 0 0.9rem 0.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+  .price {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .disponible {
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .disponible.si { background: rgba(200,241,53,0.12); color: var(--accent); }
+  .disponible.no { background: rgba(255,80,80,0.1); color: #ff6b6b; }
+
+  /* ── BOTÓN PEDIR POR WHATSAPP ── */
+  .wa-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    background: var(--wa);
+    color: #fff;
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 0.5rem 0.75rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.15s, transform 0.1s;
+    font-family: inherit;
+    white-space: nowrap;
+  }
+  .wa-btn:hover { background: #1ebe5d; }
+  .wa-btn:active { transform: scale(0.97); }
+  .wa-btn svg { flex-shrink: 0; }
+
+  /* ── VACÍO ── */
+  .empty {
+    grid-column: 1/-1;
+    text-align: center;
+    padding: 4rem 1rem;
+    color: var(--muted);
+  }
+  .empty .empty-icon { font-size: 3rem; opacity: 0.3; margin-bottom: 1rem; }
+  .empty p { font-size: 0.95rem; }
+
+  /* ── FOOTER ── */
+  footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(10,10,10,0.95);
+    border-top: 1px solid var(--border);
+    padding: 0.75rem 1.25rem;
+    text-align: center;
+    font-size: 0.78rem;
+    color: var(--muted);
+    backdrop-filter: blur(8px);
+  }
+  footer a {
+    color: var(--wa);
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  @media (max-width: 480px) {
+    .grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 0.75rem; }
+    .hero h1 { font-size: 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="logo">JM<span>x</span> Tenis</div>
+    <div class="search-wrap">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input type="text" id="search" placeholder="Buscar modelo, marca..." autocomplete="off">
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <h1>Catálogo<br><em>oficial</em></h1>
+    <p>Todos los modelos disponibles — actualizado constantemente.</p>
+  </section>
+
+  <section class="filters-section">
+    <div class="filter-row">
+      <span class="filter-label">Marca</span>
+      <div class="chips" id="filter-marca">
+        <button class="chip active" data-value="all">Todas</button>
+      </div>
+    </div>
+    <div class="filter-row">
+      <span class="filter-label">Talla</span>
+      <div class="chips" id="filter-talla">
+        <button class="chip active" data-value="all">Todas</button>
+      </div>
+    </div>
+    <div class="filter-row">
+      <span class="filter-label">Color</span>
+      <div class="chips" id="filter-color">
+        <button class="chip active" data-value="all">Todos</button>
+      </div>
+    </div>
+    <div class="filter-row">
+      <span class="filter-label">Estado</span>
+      <div class="chips" id="filter-disp">
+        <button class="chip active" data-value="all">Todos</button>
+        <button class="chip" data-value="si">Disponible</button>
+        <button class="chip" data-value="no">Agotado</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="results-bar">
+    <span class="results-count">Mostrando <strong id="count">0</strong> modelos</span>
+  </div>
+
+  <div class="grid" id="grid"></div>
+</main>
+
+<footer>
+  ¿Listo para pedir? <a id="footer-wa" href="#">Escríbenos por WhatsApp</a>
+</footer>
+
+<script>
+/* ═══════════════════════════════════════════════════════
+   NÚMERO DE WHATSAPP
+   → Cambia el número aquí abajo (solo dígitos, con código de país)
+   → México = 52 + tu número de 10 dígitos
+   → Ejemplo: 5216861234567
+═══════════════════════════════════════════════════════ */
+const WHATSAPP = "526860000000";
+
+/* ═══════════════════════════════════════════════════════
+   PRODUCTOS
+   → Agrega, edita o elimina productos aquí
+   → Para agregar foto: pon la URL de la imagen en "imagen"
+   → Si no tienes foto, deja imagen: "" y saldrá un ícono
+   → Precios en pesos mexicanos (sin el $)
+═══════════════════════════════════════════════════════ */
+const productos = [
+  {
+    id: 1,
+    marca: "Nike",
+    nombre: "Air Force 1 '07",
+    tallas: ["25", "26", "27", "28"],
+    colores: ["Blanco", "Negro"],
+    precio: 1850,
+    disponible: true,
+    imagen: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&q=80"
+  },
+  {
+    id: 2,
+    marca: "Adidas",
+    nombre: "Stan Smith",
+    tallas: ["25.5", "26.5", "27.5"],
+    colores: ["Blanco/Verde"],
+    precio: 1650,
+    disponible: true,
+    imagen: "https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=400&q=80"
+  },
+  {
+    id: 3,
+    marca: "Jordan",
+    nombre: "Air Jordan 1 Retro High OG",
+    tallas: ["26", "27", "28", "29"],
+    colores: ["Chicago", "Royal Blue"],
+    precio: 3200,
+    disponible: true,
+    imagen: "https://images.unsplash.com/photo-1556906781-9a412961a28b?w=400&q=80"
+  },
+  {
+    id: 4,
+    marca: "New Balance",
+    nombre: "574 Core",
+    tallas: ["25", "26", "27"],
+    colores: ["Gris", "Navy"],
+    precio: 1750,
+    disponible: false,
+    imagen: "https://images.unsplash.com/photo-1539185441755-769473a23570?w=400&q=80"
+  },
+  {
+    id: 5,
+    marca: "Nike",
+    nombre: "Dunk Low Retro",
+    tallas: ["25.5", "26", "27", "28"],
+    colores: ["Panda", "Green/White"],
+    precio: 2100,
+    disponible: true,
+    imagen: "https://images.unsplash.com/photo-1605348532760-6753d2c43329?w=400&q=80"
+  },
+  {
+    id: 6,
+    marca: "Adidas",
+    nombre: "Gazelle Indoor",
+    tallas: ["25", "26", "27", "28", "29"],
+    colores: ["Verde", "Bordo", "Beige"],
+    precio: 1900,
+    disponible: true,
+    imagen: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=400&q=80"
+  },
+  {
+    id: 7,
+    marca: "Converse",
+    nombre: "Chuck Taylor All Star Hi",
+    tallas: ["25", "26", "26.5", "27", "28"],
+    colores: ["Negro", "Blanco", "Rojo"],
+    precio: 1100,
+    disponible: true,
+    imagen: "https://images.unsplash.com/photo-1463100099107-aa0980c362e6?w=400&q=80"
+  },
+  {
+    id: 8,
+    marca: "Jordan",
+    nombre: "Air Jordan 4 Retro",
+    tallas: ["27", "28", "29"],
+    colores: ["Military Black"],
+    precio: 4500,
+    disponible: false,
+    imagen: "https://images.unsplash.com/photo-1584735175315-9d5df23860e6?w=400&q=80"
+  },
+];
+
+/* ─── lógica ─── */
+let filtros = { marca: "all", talla: "all", color: "all", disp: "all" };
+let busqueda = "";
+
+function waLink(producto) {
+  const msg = encodeURIComponent(`Hola! Me interesa el modelo *${producto.nombre}* (${producto.marca}) que vi en el catálogo. ¿Puedes darme más información?`);
+  return `https://wa.me/${WHATSAPP}?text=${msg}`;
+}
+
+function buildChips() {
+  const marcas = [...new Set(productos.map(p => p.marca))].sort();
+  const tallas = [...new Set(productos.flatMap(p => p.tallas))].sort((a,b) => parseFloat(a)-parseFloat(b));
+  const colores = [...new Set(productos.flatMap(p => p.colores))].sort();
+
+  function addChips(containerId, values, key) {
+    const c = document.getElementById(containerId);
+    values.forEach(v => {
+      const b = document.createElement("button");
+      b.className = "chip";
+      b.dataset.value = v;
+      b.textContent = v;
+      b.onclick = () => { filtros[key] = v; activateChip(containerId, v); render(); };
+      c.appendChild(b);
+    });
+    c.querySelector('[data-value="all"]').onclick = () => { filtros[key] = "all"; activateChip(containerId, "all"); render(); };
+  }
+
+  addChips("filter-marca", marcas, "marca");
+  addChips("filter-talla", tallas, "talla");
+  addChips("filter-color", colores, "color");
+  document.getElementById("filter-disp").querySelectorAll(".chip").forEach(b => {
+    b.onclick = () => { filtros.disp = b.dataset.value; activateChip("filter-disp", b.dataset.value); render(); };
+  });
+}
+
+function activateChip(containerId, value) {
+  document.getElementById(containerId).querySelectorAll(".chip").forEach(b => b.classList.toggle("active", b.dataset.value === value));
+}
+
+function render() {
+  const q = busqueda.toLowerCase();
+  const filtered = productos.filter(p => {
+    if (filtros.marca !== "all" && p.marca !== filtros.marca) return false;
+    if (filtros.talla !== "all" && !p.tallas.includes(filtros.talla)) return false;
+    if (filtros.color !== "all" && !p.colores.includes(filtros.color)) return false;
+    if (filtros.disp !== "all" && (p.disponible ? "si" : "no") !== filtros.disp) return false;
+    if (q && !p.nombre.toLowerCase().includes(q) && !p.marca.toLowerCase().includes(q)) return false;
+    return true;
+  });
+
+  document.getElementById("count").textContent = filtered.length;
+  const grid = document.getElementById("grid");
+
+  if (filtered.length === 0) {
+    grid.innerHTML = `<div class="empty"><div class="empty-icon">👟</div><p>No hay modelos con esos filtros.<br>Intenta con otras opciones.</p></div>`;
+    return;
+  }
+
+  grid.innerHTML = filtered.map(p => `
+    <div class="card">
+      <div class="card-img">
+        ${p.imagen
+          ? `<img src="${p.imagen}" alt="${p.nombre}" loading="lazy">`
+          : `<span class="placeholder-icon">👟</span>`}
+      </div>
+      <div class="card-body">
+        <div class="card-brand">${p.marca}</div>
+        <div class="card-name">${p.nombre}</div>
+        <div class="card-meta">
+          ${p.tallas.map(t => `<span class="tag">${t}</span>`).join("")}
+          ${p.colores.map(c => `<span class="tag">${c}</span>`).join("")}
+        </div>
+      </div>
+      <div class="card-footer">
+        <div>
+          <div class="price">$${p.precio.toLocaleString()}</div>
+          <div class="disponible ${p.disponible ? "si" : "no"}">${p.disponible ? "Disponible" : "Agotado"}</div>
+        </div>
+        ${p.disponible
+          ? `<a class="wa-btn" href="${waLink(p)}" target="_blank" rel="noopener">
+               <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.092.539 4.057 1.481 5.771L0 24l6.385-1.463A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.002-1.371l-.359-.214-3.722.853.886-3.617-.234-.371A9.818 9.818 0 1112 21.818z"/></svg>
+               Pedir
+             </a>`
+          : ""}
+      </div>
+    </div>
+  `).join("");
+}
+
+document.getElementById("search").addEventListener("input", e => { busqueda = e.target.value; render(); });
+document.getElementById("footer-wa").href = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent("Hola! Vi su catálogo y quiero más información.")}`;
+
+buildChips();
+render();
+</script>
+</body>
+</html>
