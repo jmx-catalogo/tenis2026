@@ -743,7 +743,7 @@ const FILTER_DEFS = [
 ];
 
 function waLink(producto, talla) {
-  const tallaTxt = talla ?`, talla ${talla}` : "";
+  const tallaTxt = talla?`, talla ${talla}`:"";
   const msg = encodeURIComponent(`Hola! Me interesa el modelo ${producto.nombre} (${producto.marca}) color ${producto.color} ${tallaTxt} que vi en el catálogo. ¿Puedes darme más información?`);
   return `https://wa.me/${WHATSAPP}?text=${msg}`;
 }
