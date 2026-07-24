@@ -108,6 +108,29 @@
     margin-bottom: 0.75rem;
   }
 
+.muestrario-banner {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  border-left: 3px solid var(--accent);
+  padding: 0.25rem 0 0.25rem 0.75rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-top: 0.5rem;
+}
+
+.muestrario-link {
+  font-weight: 600;
+  color: var(--accent);
+  cursor: pointer;
+}
+.muestrario-sub {
+  font-size: 0.72rem;
+  color: var(--muted);
+  width: 100%;
+}
+
   /* ── FILTROS (estilo dropdown, Apple Store) ── */
   .filters-section {
     max-width: 900px;
@@ -639,6 +662,81 @@ display: inline-block;
 
   body.modal-locked { overflow: hidden; }
 
+  /* ── GUÍA DE TALLAS ── */
+.tallas-guide-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-family: inherit;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 0.5rem;
+  transition: color 0.15s;
+}
+.tallas-guide-btn:hover { color: var(--text); }
+.tallas-guide-btn svg { flex-shrink: 0; }
+
+.tallas-guide-panel {
+  background: var(--surface2);
+  border-radius: var(--radius);
+  padding: 1rem;
+  margin-bottom: 1.25rem;
+  display: none;
+}
+.tallas-guide-panel.open { display: block; }
+
+.tallas-gender-tabs {
+  display: flex;
+  gap: 0.4rem;
+  margin-bottom: 1rem;
+}
+.tallas-gender-tab {
+  flex: 1;
+  padding: 0.45rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: none;
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.tallas-gender-tab.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #0a0a0a;
+}
+
+.tallas-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+}
+.tallas-table th {
+  color: var(--muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.7rem;
+  padding: 0.4rem 0.5rem;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+}
+.tallas-table td {
+  padding: 0.45rem 0.5rem;
+  text-align: center;
+  color: var(--text);
+}
+.tallas-table tr:nth-child(even) td {
+  background: rgba(255,255,255,0.03);
+}
+
   @media (max-width: 480px) {
     .grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 1rem; }
     .hero h1 { font-size: 2rem; }
@@ -668,10 +766,13 @@ display: inline-block;
 </header>
 
 <main>
-  <section class="hero">
-    <h1>Catálogo <em>2026</em></h1>
-    <p>Encuentra modelos disponibles en existencia. Actualizado constantemente.</p>
-  </section>
+<section class="hero">
+  <h1>Catálogo <em>2026</em></h1>
+  <p>Modelos en existencia. Actualizado constantemente.</p>
+<div class="muestrario-banner">
+  ¿Buscas algo en especial? <span class="muestrario-link" id="muestrario-wa">Escríbenos</span>y pregunta por el modelo que tienes en mente.
+</div>
+</section>
 
   <section class="filters-section" id="filters-section"></section>
 
@@ -692,7 +793,7 @@ display: inline-block;
 </div>
 
 <footer>
-  ¿Necesitas más información? <a id="footer-wa" href="#">Escríbenos por WhatsApp</a>
+  ¿Necesitas más información? <a id="footer-wa" href="#">Escríbenos por WhatsApp</a> 
 </footer>
 
 <script>
@@ -718,23 +819,105 @@ const productos = [
     marca: "Onitsuka Tiger",
     nombre: "Mexico 66",
     color: "Amarillo/Negro",
-    tallas: ["26"],
+    tallas: ["23"],
     precio: 1850,
     disponible: true,
     descripcion: "El modelo que puso a Onitsuka Tiger en el radar. Con un diseño estilizado, colorway icónico y alta comodidad desde el primer uso.",
     imagenes: [
-      "https://i.ibb.co/6cZgyNfk/IMG-8784.jpg",
+      "https://i.ibb.co/20c3CG8C/IMG-8784.jpg",
       "https://i.ibb.co/vvYgjQVX/IMG-8782.jpg",
       "https://i.ibb.co/jPv347pj/IMG-8781.jpg"
     ]
   },
   
+      {
+    id: 5,
+    marca: "Adidas",
+    nombre: "Samba OG",
+    color: "Cafe",
+    tallas: ["23.5"],
+    precio: 1850,
+    disponible: true,
+    descripcion: "Más de siete décadas después de su lanzamiento, los Samba OG siguen siendo uno de los modelos más representativos de Adidas. La combinación en tonos café realza su inspiración retro y los convierte en un básico fácil de combinar todos los días.",
+    imagenes: [
+      "https://i.ibb.co/mFrDDCKx/IMG-8851.jpg",
+      "https://i.ibb.co/4ZxtCpNt/IMG-8850.jpg",
+      "https://i.ibb.co/V0DFT09F/IMG-8852.jpg"
+    ]
+  }, 
+
+        {
+    id: 19,
+    marca: "Nike",
+    nombre: "Air Max 270",
+    color: "Negro",
+    tallas: ["25", "25.5", "26", "28.5", "29", "30"],
+    precio: 1850,
+    disponible: true,
+    descripcion: "Inspirados en la evolución constante de la familia Air Max, los Air Max 270 presentan una silueta limpia y una distintiva unidad Air en el talón que se ha convertido en su sello característico. El acabado totalmente negro completa un diseño pensado para destacar con discreción.",
+    imagenes: [
+      "https://i.ibb.co/kVCZfgD8/IMG-8805.jpg",
+      "https://i.ibb.co/JWKpJNH6/IMG-8806.jpg",
+      "https://i.ibb.co/Jwyc7Nbj/IMG-8807.jpg"
+    ]
+  },
+
   {
+    id: 16,
+    marca: "Converse",
+    nombre: "Run Star Hike Triple White",
+    color: "Blanco",
+    tallas: ["23", "24"],
+    precio: 1850,
+    disponible: true,
+    descripcion: "La esencia del Chuck Taylor con una perspectiva completamente nueva. Los Converse Run Star Hike reinventan un clásico mediante una plataforma dentada de gran carácter, mientras que el acabado triple blanco aporta una estética limpia y minimalista.",
+    imagenes: [
+      "https://i.ibb.co/xSbXm9bG/IMG-8861.jpg",
+      "https://i.ibb.co/bjFsd0jD/IMG-8860.jpg",
+      "https://i.ibb.co/d4m0sQP6/IMG-8864.jpg"
+    ]
+  },
+
+
+  {
+    id: 9,
+    marca: "On",
+    nombre: "Cloudmonster",
+    color: "Negro",
+    tallas: ["23", "23.5", "24", "26.5"],
+    precio: 1850,
+    disponible: true,
+    descripcion: "Reconocibles a primera vista, los On Cloudmonster se caracterizan por su plataforma de gran tamaño y una pisada fluida. El acabado totalmente negro refuerza su carácter moderno y minimalista.",
+    imagenes: [
+      "https://i.ibb.co/bjxvC1tX/IMG-8859.jpg",
+      "https://i.ibb.co/NnJjgb6V/IMG-8857.jpg",
+      "https://i.ibb.co/C5g3KB37/IMG-8856.jpg",
+      "https://i.ibb.co/xZTn6f4/IMG-8858.jpg"
+    ]
+  },
+
+    {
+    id: 12,
+    marca: "Nike",
+    nombre: "Air More Uptempo",
+    color: "Blanco/Azul",
+    tallas: ["29.5"],
+    precio: 1850,
+    disponible: true,
+    descripcion: "Con un diseño inspirado en el estilo de básquetbol de alto vuelo y el arte del graffiti de los años 90, este calzado deportivo no puede dejar de ser el centro de atención. Además, las unidades Air en el talón, el antepié y el mediopié brindan una cómoda amortiguación.",
+    imagenes: [
+      "https://i.ibb.co/xSSC5VBV/IMG-8878.jpg",
+      "https://i.ibb.co/s9dRwc05/IMG-8877.jpg",
+      "https://i.ibb.co/gLyPbrkp/IMG-8879.jpg"
+    ]
+  },
+
+    {
     id: 2,
     marca: "Onitsuka Tiger",
     nombre: "Mexico 66",
     color: "Negro/Gris",
-    tallas: ["27"],
+    tallas: ["25"],
     precio: 1850,
     disponible: true,
     descripcion: "El modelo que puso a Onitsuka Tiger en el radar. El acabado negro brillante combina su silueta retro con una comodidad que se disfruta desde el primer uso.",
@@ -746,11 +929,91 @@ const productos = [
   },
 
   {
+    id: 6,
+    marca: "HOKA",
+    nombre: "Mafate X",
+    color: "Rosa/Naranja/Amarillo/Negro/Verde",
+    tallas: ["24.5"],
+    precio: 1850,
+    disponible: true,
+    descripcion: "Máximo rendimiento con una estética inconfundible. Los HOKA Mafate X destacan por su comodidad en largas jornadas, excelente amortiguación y una combinación de colores que refleja toda la energía del modelo.",
+    imagenes: [
+      "https://i.ibb.co/01Nx90W/IMG-8818.jpg",
+      "https://i.ibb.co/v4m43pSN/IMG-8819.jpg",
+      "https://i.ibb.co/B2nWBzXL/IMG-8816.jpg"
+    ]
+  },
+
+  {
+    id: 13,
+    marca: "Nike",
+    nombre: "Air Jordan 3",
+    color: "Negro/Blanco/Gris/Rojo",
+    tallas: ["28.5"],
+    precio: 1850,
+    disponible: true,
+    descripcion: "Pocas siluetas han dejado una huella tan profunda como los Air Jordan 3. Su característico estampado de piel de elefante, combinado con una construcción premium y una amortiguación Air visible, los ha convertido en uno de los modelos más admirados de la línea Jordan.",
+    imagenes: [
+      "https://i.ibb.co/sJW40GcJ/IMG-8881.jpg",
+      "https://i.ibb.co/Kph2nq3k/IMG-8882.jpg",
+      "https://i.ibb.co/nqNLwV78/IMG-8883.jpg"
+    ]
+  },
+
+  {
+    id: 4,
+    marca: "Adidas",
+    nombre: "Samba XLG",
+    color: "Negro/Blanco",
+    tallas: ["24.5"],
+    precio: 1850,
+    disponible: true,
+    descripcion: "El clásico de Adidas con un toque más robusto. Los Samba XLG conservan el estilo del modelo original, integrando una suela más gruesa y una comodidad mejorada.",
+    imagenes: [
+      "https://i.ibb.co/tWVdHpS/IMG-8799.jpg",
+      "https://i.ibb.co/mFXnrfSW/IMG-8800.jpg",
+      "https://i.ibb.co/6c1W6NTp/IMG-8798.jpg"
+    ]
+  },
+
+    {
+    id: 20,
+    marca: "Nike",
+    nombre: "Air Max Waffle Racer SP",
+    color: "Negro",
+    tallas: ["27.5", "28"],
+    precio: 1850,
+    disponible: true,
+    descripcion: "Dos épocas de Nike reunidas en una sola propuesta. Los Air Max Waffle Racer SP reinterpretan el legado de los primeros modelos de running con una combinación de textil de acabado satinado, gamuza y revestimientos de cuero.",
+    imagenes: [
+      "https://i.ibb.co/Rk0zg4GM/IMG-8896.jpg",
+      "https://i.ibb.co/jvj1vCms/IMG-8897.jpg",
+      "https://i.ibb.co/6czC240q/IMG-8898.jpg"
+    ]
+  },
+
+  {
+    id: 7,
+    marca: "HOKA",
+    nombre: "Clifton",
+    color: "Beige/Cafe",
+    tallas: ["24", "25", "26"],
+    precio: 1850,
+    disponible: true,
+    descripcion: "Pensados para quienes priorizan la comodidad sin renunciar al estilo. Los HOKA Clifton combinan una amortiguación suave, una construcción ligera y un acabado en beige moderno y versátil.",
+    imagenes: [
+      "https://i.ibb.co/d4f29hjK/IMG-8811.jpg",
+      "https://i.ibb.co/FbJSwmft/IMG-8810.jpg",
+      "https://i.ibb.co/wF4GxV2W/IMG-8815.jpg"
+    ]
+  },
+
+  {
     id: 3,
     marca: "Onitsuka Tiger",
     nombre: "Mexico 66",
     color: "Negro/Blanco",
-    tallas: ["26", "27"],
+    tallas: ["23.5"],
     precio: 1850,
     disponible: true,
     descripcion: "El modelo que puso a Onitsuka Tiger en el radar. Un diseño ligero, altamente cómodo y fácil de combinar gracias a su clásico colorway en negro y blanco.",
@@ -761,6 +1024,120 @@ const productos = [
     ]
   },
   
+  {
+    id: 15,
+    marca: "On",
+    nombre: "Cloudrock",
+    color: "Beige/Cafe",
+    tallas: ["27", "28", "29"],
+    precio: 1850,
+    disponible: true,
+    descripcion: "Diseñados para enfrentar cualquier terreno con la precisión de la ingeniería suiza. Los Cloudrock Mid Waterproof tienen una membrana impermeable, soporte en el tobillo y una suela de gran tracción que logra mantener el rendimiento incluso en las condiciones más exigentes.",
+    imagenes: [
+      "https://i.ibb.co/3Y9p7G1n/IMG-8885.jpg",
+      "https://i.ibb.co/ycBfftDQ/IMG-8886.jpg"
+    ]
+  },
+
+  {
+    id: 14,
+    marca: "Nike",
+    nombre: "Air Jordan 4 Retro Bred",
+    color: "Negro/Rojo",
+    tallas: ["30"],
+    precio: 1850,
+    disponible: true,
+    descripcion: "Los Air Jordan 4 Retro Bred combinan una parte superior de nubuck negro con los inconfundibles detalles en Fire Red, dando vida a un modelo que sigue siendo icónico dentro de la cultura sneaker décadas después de su lanzamiento.",
+    imagenes: [
+      "https://i.ibb.co/3Y7GYTCP/IMG-8872.jpg",
+      "https://i.ibb.co/6czqgKXS/IMG-8869.jpg",
+      "https://i.ibb.co/DD71n7yc/IMG-8874.jpg",
+      "https://i.ibb.co/ccqXymGp/IMG-8873.jpg"
+    ]
+  },  
+
+  {
+    id: 8,
+    marca: "LOEWE",
+    nombre: "x On Cloudtilt",
+    color: "Rosa/Rojo",
+    tallas: ["24"],
+    precio: 1850,
+    disponible: true,
+    descripcion: "Una colaboración que une la estética de LOEWE con la tecnología de On. El modelo Cloudtilt incorpora una construcción en malla tejida ultraligera con una suela técnica de goma espuma que asegura una pisada suave y extra cómoda.",
+    imagenes: [
+      "https://i.ibb.co/hRvWMGrX/IMG-8854.jpg",
+      "https://i.ibb.co/Cpv06fyw/IMG-8855.jpg"
+    ]
+  },
+
+  {
+    id: 11,
+    marca: "Converse",
+    nombre: "Run Star Motion",
+    color: "Negro/Blanco",
+    tallas: ["24"],
+    precio: 1850,
+    disponible: true,
+    descripcion: "Los Run Star Motion conservan el ADN del modelo original Chuck Taylor, con una plataforma de diseño y líneas fluidas que transforman un clásico en una silueta más atrevida con una alta comodidad y ligereza.",
+    imagenes: [
+      "https://i.ibb.co/SwdWdhM6/IMG-8822.jpg",
+      "https://i.ibb.co/B9wzWn3/IMG-8820.jpg",
+      "https://i.ibb.co/LhYSbtjg/IMG-8823.jpg"
+    ]
+  },
+
+      {
+    id: 18,
+    marca: "Nike",
+    nombre: "Air Max 2016",
+    color: "Negro",
+    tallas: ["27.5", "28", "28.5", "29"],
+    precio: 1850,
+    disponible: true,
+    descripcion: "Diseñados para mantener el movimiento con naturalidad gracias a su innovadora silueta y su malla transpirable superior que ofrece ligereza y ventilación.",
+    imagenes: [
+      "https://i.ibb.co/S4pGwZDP/IMG-8892.jpg",
+      "https://i.ibb.co/bMfV4Bb6/IMG-8893.jpg",
+      "https://i.ibb.co/YFFVLp6n/IMG-8894.jpg",
+      "https://i.ibb.co/7JhwB2YH/IMG-8895.jpg"
+    ]
+  },
+
+ //////////// PENDIENTE TALLAS
+    {
+    id: 17,
+    marca: "Nike",
+    nombre: "Air Max DN Hyper Blue",
+    color: "Azul",
+    tallas: ["27"],
+    precio: 1850,
+    disponible: true,
+    descripcion: "Toda generación de Air Max tiene un modelo que marca el camino. Los Air Max DN representan esa nueva etapa con la tecnología Dynamic Air, una silueta de inspiración futurista y un color Hyper Blue que transmite velocidad y carácter.",
+    imagenes: [
+      "https://i.ibb.co/fGxTq2DL/IMG-8900.jpg",
+      "https://i.ibb.co/23PB5J84/IMG-8901.jpg",
+      "https://i.ibb.co/SXL2zG2z/IMG-8904.jpg",
+      "https://i.ibb.co/JjJXmgt7/IMG-8903.jpg"
+    ]
+  },
+
+    {
+    id: 21,
+    marca: "Nike",
+    nombre: "Jordan 11 Retro Space Jam",
+    color: "Negro",
+    tallas: ["29.5"],
+    precio: 1850,
+    disponible: true,
+    descripcion: "Reconocidos por su acabado especial en charol negro y su suela translúcida azul, los Air Jordan 11 Retro Space Jam representan uno de los capítulos más icónicos de Jordan.",
+    imagenes: [
+      "https://i.ibb.co/v4StzhGw/IMG-8866.jpg",
+      "https://i.ibb.co/7t7PK7zz/IMG-8868.jpg",
+      "https://i.ibb.co/CsTtjtpW/IMG-8867.jpg"
+    ]
+  },
+
 ];
 
 /* ─── lógica ─── */
@@ -916,10 +1293,11 @@ function render() {
 /* ─── MODAL DE PRODUCTO ─── */
 function getRelacionados(p) {
   const candidatos = productos.filter(x => x.id !== p.id && x.disponible);
-  // priorizar coincidencias por marca o color en común
-  const conCoincidencia = candidatos.filter(x =>
-    x.marca === p.marca || x.colores.some(c => p.colores.includes(c))
-  );
+  const coloresP = p.color.split("/").map(c => c.trim());
+  const conCoincidencia = candidatos.filter(x => {
+    const coloresX = x.color.split("/").map(c => c.trim());
+    return x.marca === p.marca || coloresX.some(c => coloresP.includes(c));
+  });
   const resto = candidatos.filter(x => !conCoincidencia.includes(x));
   const mezcla = [...conCoincidencia.sort(() => Math.random() - 0.5), ...resto.sort(() => Math.random() - 0.5)];
   return mezcla.slice(0, 4);
@@ -960,7 +1338,20 @@ function openModal(id) {
 
       ${p.descripcion ? `<p class="modal-desc">${p.descripcion}</p>` : ""}
 
-      <div class="modal-section-label">Selecciona tu talla</div>
+      <button class="tallas-guide-btn" id="tallas-guide-toggle">
+  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+  Guía de tallas
+</button>
+
+<div class="tallas-guide-panel" id="tallas-guide-panel">
+  <div class="tallas-gender-tabs">
+    <button class="tallas-gender-tab active" data-gender="mujer">Mujer</button>
+    <button class="tallas-gender-tab" data-gender="hombre">Hombre</button>
+  </div>
+  <div id="tallas-guide-table"></div>
+</div>
+
+      <div class="modal-section-label">Selecciona tu talla (CM)</div>
       <div class="modal-tallas">
       ${p.tallas.map(t => `<button class="modal-talla" data-talla="${t}">${t}</button>`).join("")}
       </div>
@@ -1014,6 +1405,47 @@ document.querySelectorAll(".modal-talla").forEach(btn => {
   });
 });
 
+// guía de tallas
+const tallasData = {
+  mujer: [
+    ["22","2","5"],["22.5","2.5","5.5"],["23","3","6"],["23.5","3.5","6.5"],
+    ["24","4","7"],["24.5","4.5","7.5"],["25","5","8"],["25.5","5.5","8.5"],
+    ["26","6","9"],["26.5","6.5","9.5"],["27","7","10"],
+  ],
+  hombre: [
+    ["25","5","7"],["25.5","5.5","7.5"],["26","6","8"],["26.5","6.5","8.5"],
+    ["27","7","9"],["27.5","7.5","9.5"],["28","8","10"],["28.5","8.5","10.5"],
+    ["29","9","11"],["29.5","9.5","11.5"],["30","10","12"],
+  ]
+};
+
+const renderTallasTable = (gender) => {
+  const rows = tallasData[gender].map(r => `
+    <tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td></tr>
+  `).join("");
+  document.getElementById("tallas-guide-table").innerHTML = `
+    <table class="tallas-table">
+      <thead><tr><th>CM</th><th>MEX</th><th>USA</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>
+  `;
+}
+
+document.getElementById("tallas-guide-toggle").addEventListener("click", () => {
+  const panel = document.getElementById("tallas-guide-panel");
+  panel.classList.toggle("open");
+});
+
+document.querySelectorAll(".tallas-gender-tab").forEach(tab => {
+  tab.addEventListener("click", () => {
+    document.querySelectorAll(".tallas-gender-tab").forEach(t => t.classList.remove("active"));
+    tab.classList.add("active");
+    renderTallasTable(tab.dataset.gender);
+  });
+});
+
+renderTallasTable("mujer");
+
   // productos relacionados -> abrir su propio modal
   document.querySelectorAll(".modal-related-card").forEach(card => {
     card.addEventListener("click", () => openModal(parseInt(card.dataset.id)));
@@ -1039,6 +1471,9 @@ document.addEventListener("keydown", e => {
 
 document.getElementById("search").addEventListener("input", e => { busqueda = e.target.value; render(); });
 document.getElementById("footer-wa").href = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent("Hola! Vi su catálogo y quiero más información.")}`;
+document.getElementById("muestrario-wa").addEventListener("click", () => {
+  window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent("Hola! Estoy buscando un modelo en especial y quisiera saber si pueden conseguírmelo.")}`, "_blank");
+});
 
 buildFilters();
 render();
