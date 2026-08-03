@@ -378,6 +378,7 @@
   }
   .disponible.si { background: none; color: var(--accent); }
   .disponible.no { background: none; color: #ff6b6b; }
+  .disponible.oferta { background: none; color: #f5a623; }
 
   /* ── BOTÓN PEDIR POR WHATSAPP ── */
   .wa-btn {
@@ -400,23 +401,6 @@
   .wa-btn:hover { background: #1ebe5d; }
   .wa-btn:active { transform: scale(0.97); }
   .wa-btn svg { flex-shrink: 0; }
-  .explore-btn {
-display: inline-block;
-  background: var(--surface2);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  font-size: 0.78rem;
-  font-weight: 500;
-  padding: 0.3rem 0.7rem;
-  color: var(--muted);
-  margin-top: 0.2rem;
-  width: fit-content;
-  cursor: pointer;
-  font-family: inherit;
-  transition: background 0.15s, transform 0.1s;
-}
-.explore-btn:hover { background: #2a2a2a; }
-.explore-btn:active { background: #333; transform: scale(0.97); }
 
   /* ── VACÍO ── */
   .empty {
@@ -1051,7 +1035,7 @@ const productos = [
     nombre: "Cloudtilt",
     color: "Negro",
     tallas: ["26.5","27", "27.5", "28", "28.5", "29"],
-    precio: 1850,
+    precio: 1900,
     disponible: true,
     descripcion: "Estilo moderno y liso en color Eclipse Black + Tecnología CloudTec® en la entresuela. Diseñados para una transferencia de peso suave y mayor comodidad.",
     imagenes: [
@@ -1218,6 +1202,7 @@ const productos = [
     tallas: ["26.5","27", "27.5", "28"],
     precio: 1500,
     disponible: true,
+    oferta: true,
     descripcion: "Los Nike Air Max 2013 Hot Punch reúnen rendimiento y un estilo urbano audaz en un diseño monocromático de alta visibilidad. Su parte superior está confeccionada con una malla transpirable de alta ingeniería que asegura ligereza, complementada por cables Flywire ocultos que optimizan el soporte del pie.",
     imagenes: [
       "https://i.ibb.co/4wJCmXzc/IMG-9552.jpg",
@@ -1298,10 +1283,10 @@ const productos = [
     marca: "Nike",
     nombre: "Air Max Dn",
     color: "Negro",
-    tallas: ["29.5"],
+    tallas: ["26.5","27", "27.5", "28", "28.5", "29"],
     precio: 1800,
     disponible: true,
-    descripcion: "Toda generación de Air Max tiene un modelo que marca el camino. Los Air Max DN representan esa nueva etapa con la tecnología Dynamic Air, una silueta de inspiración futurista y sofisticada por sus icónicas cápsulas traseras.",
+    descripcion: "Toda generación de Air Max tiene un modelo que marca el camino. Los Air Max Dn representan esa nueva etapa con la tecnología Dynamic Air, una silueta de inspiración futurista y sofisticada por sus icónicas cápsulas traseras.",
     imagenes: [
       "https://i.ibb.co/RRXdSJ3/IMG-9570.jpg",
       "https://i.ibb.co/7dJysMBH/IMG-9571.jpg",
@@ -1347,7 +1332,7 @@ const productos = [
     marca: "Nike",
     nombre: "Air Max Dn Hyper Blue",
     color: "Azul",
-    tallas: ["27"],
+    tallas: ["27.5"],
     precio: 1800,
     disponible: true,
     descripcion: "Toda generación de Air Max tiene un modelo que marca el camino. Los Air Max Dn representan esa nueva etapa con la tecnología Dynamic Air, una silueta de inspiración futurista y un color Hyper Blue que transmite velocidad y carácter.",
@@ -1381,7 +1366,7 @@ const productos = [
     nombre: "Samba OG",
     color: "Negro/Blanco",
     tallas: ["24.5"],
-    precio: 1850,
+    precio: 1900,
     disponible: true,
     descripcion: "Un clásico de líneas limpias en blanco con detalles en negro y la característica suela de goma color caramelo.",
     imagenes: [
@@ -1399,7 +1384,7 @@ const productos = [
     tallas: ["29.5"],
     precio: 2000,
     disponible: true,
-    descripcion: "Reconocidos por su acabado especial en charol negro y su suela translúcida azul, los Air Jordan 11 Retro Space Jam representan uno de los capítulos más icónicos de Jordan.",
+    descripcion: "Reconocidos por su acabado especial en charol negro y su suela translúcida azul, los Air Jordan 11 Retro Space Jam representan uno de los capítulos más memorables de Jordan.",
     imagenes: [
       "https://i.ibb.co/mVvbLD7q/unnamed-1.jpg",
       "https://i.ibb.co/7JJc2SD2/IMG-9636.jpg",
@@ -1414,9 +1399,9 @@ const productos = [
     nombre: "Cloudtilt",
     color: "Blanco/Rojo",
     tallas: ["29.5"],
-    precio: 1850,
+    precio: 1900,
     disponible: true,
-    descripcion: "Malla técnica transpirable de diseño ergonómico con suela CloudTec® Phase, combinando un diseño blanco marfil con elegantes detalles en color tinto.",
+    descripcion: "Malla técnica transpirable de diseño ergonómico con suela CloudTec®, combinando un diseño blanco marfil con elegantes detalles en color tinto.",
     imagenes: [
       "https://i.ibb.co/NnSxMsBz/IMG-9627.jpg",
       "https://i.ibb.co/zh5zJCJk/IMG-9629.jpg",
@@ -1432,7 +1417,7 @@ const productos = [
     tallas: ["25", "25.5", "26", "28.5", "29", "30"],
     precio: 1850,
     disponible: true,
-    descripcion: "Inspirados en la evolución constante de la familia Air Max, los Air Max 270 presentan una silueta limpia y una distintiva unidad Air en el talón que se ha convertido en su sello característico. El acabado totalmente negro completa un diseño pensado para destacar con discreción.",
+    descripcion: "Inspirados en la evolución constante de la familia Air Max, los 270 presentan una silueta limpia y su unidad Air en el talón que se ha convertido en su sello característico. El acabado totalmente negro completa un diseño pensado para destacar con discreción.",
     imagenes: [
       "https://i.ibb.co/JWKpJNH6/IMG-8806.jpg",
       "https://i.ibb.co/kVCZfgD8/IMG-8805.jpg",
@@ -1453,7 +1438,7 @@ const FILTER_DEFS = [
   { key: "marca", label: "Marca", getValues: () => [...new Set(productos.map(p => p.marca))].sort() },
   { key: "talla", label: "Talla", getValues: () => [...new Set(productos.flatMap(p => p.tallas))].sort((a,b) => parseFloat(a)-parseFloat(b)) },
   { key: "color", label: "Color", getValues: () => [...new Set(productos.flatMap(p => p.color.split("/").map(c => c.trim())))].sort() },
-  { key: "disp", label: "Disponible", getValues: () => ["si", "no"], display: v => v === "si" ? "Disponible" : "Agotado" },
+  { key: "disp", label: "Disponible", getValues: () => ["si", "no", "oferta"], display: v => v === "si" ? "Disponible" : v === "no" ? "Agotado" : "En oferta" },
 ];
 
 function waLink(producto, talla) {
@@ -1549,7 +1534,9 @@ function render() {
     if (filtros.marca !== "all" && p.marca !== filtros.marca) return false;
     if (filtros.talla !== "all" && !p.tallas.includes(filtros.talla)) return false;
     if (filtros.color !== "all" && !p.color.split("/").map(c => c.trim()).includes(filtros.color)) return false;
-    if (filtros.disp !== "all" && (p.disponible ? "si" : "no") !== filtros.disp) return false;
+    if (filtros.disp === "no" && p.disponible) return false;
+if (filtros.disp === "si" && !p.disponible) return false;
+if (filtros.disp === "oferta" && !p.oferta) return false;
     if (q && !p.nombre.toLowerCase().includes(q) && !p.marca.toLowerCase().includes(q)) return false;
     return true;
   });
@@ -1573,12 +1560,13 @@ function render() {
       <div class="card-body">
         <div class="card-brand">${p.marca}</div>
         <div class="card-name">${p.nombre}</div>
-        <span class="explore-btn" onclick="event.stopPropagation(); openModal(${p.id})">Explorar →</span>
       </div>
       <div class="card-footer">
         <div>
-          <div class="price">$${p.precio.toLocaleString()}</div>
-          <div class="disponible ${p.disponible ? "si" : "no"}">${p.disponible ? "Disponible" : "Agotado"}</div>
+<div class="price">$${p.precio.toLocaleString()}</div>
+<div class="disponible ${p.oferta ? "oferta" : p.disponible ? "si" : "no"}">
+  ${p.oferta ? "En oferta" : p.disponible ? "Disponible" : "Agotado"}
+</div>
         </div>
         ${p.disponible
           ? `<a class="wa-btn" href="${waLink(p)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">
