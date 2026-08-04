@@ -779,9 +779,18 @@
   background: rgba(255,255,255,0.03);
 }
 
- @media (max-width: 480px) {
-  .grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 0.75rem; }
+@media (max-width: 520px) {
+  /* Grid */
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+    padding: 0 1rem 6rem;
+  }
+
+  /* Hero */
   .hero h1 { font-size: 2rem; }
+
+  /* Tarjetas */
   .wa-btn { padding: 0.65rem 0.85rem; font-size: 0.78rem; }
   .card-footer { padding: 0 0.85rem 0.85rem; }
 
@@ -806,20 +815,21 @@
     margin: 0;
   }
 
-  /* Filtros en una sola línea */
+  /* Filtros en una sola línea deslizable */
   .filters-section {
-    flex-wrap: nowrap;
+    flex-wrap: nowrap !important;
     overflow-x: auto;
-    padding-bottom: 0.5rem;
+    padding-bottom: 0.75rem;
     -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
   }
+  .filters-section::-webkit-scrollbar { display: none; }
   .filter-dropdown { flex-shrink: 0; }
   .filter-chip {
     font-size: 0.75rem;
     padding: 0.35rem 0.7rem;
   }
 }
-
 .modal {
   max-width: 100%;
   border-radius: 0;
