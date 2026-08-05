@@ -845,6 +845,16 @@
   .modal-overlay { padding: 0; align-items: stretch; }
   .modal { max-width: 100%; border-radius: 0; min-height: 100vh; max-height: 100vh; overflow-y: auto; -webkit-overflow-scrolling: touch; }
 
+.filter-dropdown {
+  flex-shrink: 0;
+  touch-action: manipulation;
+}
+.filter-chip {
+  font-size: 0.75rem;
+  padding: 0.35rem 0.7rem;
+  touch-action: manipulation;
+}
+
 .modal {
   max-width: 100%;
   border-radius: 0;
@@ -853,6 +863,7 @@
   overflow-y: auto;
   -webkit-overflow-scrolling: touch; }
   }
+
 </style>
 </head>
 <body>
@@ -1543,9 +1554,9 @@ const productos = [
     disponible: true,
     descripcion: "Un clásico de líneas limpias en blanco con detalles en negro y la característica suela de goma color caramelo.",
     imagenes: [
-      "https://i.ibb.co/kYc1SFb/IMG-9548.jpg",
-      "https://i.ibb.co/35gG2cvH/IMG-9453.jpg",
-      "https://i.ibb.co/ZR23n9bL/IMG-9452.jpg"
+      "https://i.ibb.co/1GdmyJBm/IMG-9548.jpg",
+      "https://i.ibb.co/ZR23n9bL/IMG-9452.jpg",
+      "https://i.ibb.co/35gG2cvH/IMG-9453.jpg"
     ]
   },
 
