@@ -826,20 +826,18 @@
 }
 
   /* Filtros en una sola línea deslizable */
-  .filters-section {
-  flex-wrap: nowrap !important;
-  overflow-x: auto;
-  overflow-y: visible;
-  padding-bottom: 0.75rem;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
+.filters-section {
+  flex-wrap: wrap !important;
+  overflow: visible !important;
+  gap: 0.5rem;
+  padding-bottom: 0.5rem;
 }
-  .filters-section::-webkit-scrollbar { display: none; }
-  .filter-dropdown { flex-shrink: 0; }
-  .filter-chip {
-    font-size: 0.75rem;
-    padding: 0.35rem 0.7rem;
-  }
+.filter-dropdown { flex-shrink: 0; }
+.filter-chip {
+  font-size: 0.75rem;
+  padding: 0.35rem 0.7rem;
+  touch-action: manipulation;
+}
 
   /* ... otras reglas ... */
 
