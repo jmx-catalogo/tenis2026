@@ -203,7 +203,7 @@
     min-width: 180px;
     max-height: 280px;
     overflow-y: auto;
-    z-index: 200;
+    z-index: 500;
     display: none;
   }
   .filter-panel.open { display: block; }
@@ -827,12 +827,13 @@
 
   /* Filtros en una sola línea deslizable */
   .filters-section {
-    flex-wrap: nowrap !important;
-    overflow-x: auto;
-    padding-bottom: 0.75rem;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-  }
+  flex-wrap: nowrap !important;
+  overflow-x: auto;
+  overflow-y: visible;
+  padding-bottom: 0.75rem;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
   .filters-section::-webkit-scrollbar { display: none; }
   .filter-dropdown { flex-shrink: 0; }
   .filter-chip {
