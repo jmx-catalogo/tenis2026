@@ -133,14 +133,37 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 0.5rem;
-  background: linear-gradient(135deg, rgba(200,241,53,0.1) 0%, rgba(200,241,53,0.03) 60%, transparent 100%);
+  background-image: url("https://i.ibb.co/Ng00WDWh/banner.jpg");
+  background-size: 300px;
+  background-repeat: repeat;
+  background-position: center;
   border-radius: var(--radius);
-  padding: 1rem 1.25rem;
+  padding: 1.25rem 1.5rem;
   font-size: 0.9rem;
-  color: var(--text);
+  color: #fff;
   margin-top: 0.75rem;
   width: 100%;
+  position: relative;
+  overflow: hidden;
+
+  -webkit-mask-image: radial-gradient(ellipse at center, black 40%, transparent 100%);
+  mask-image: radial-gradient(ellipse at center, black 40%, transparent 100%);
+
 }
+
+.muestrario-banner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  border-radius: var(--radius);
+}
+
+.muestrario-banner > * {
+  position: relative;
+  z-index: 1;
+}
+
 .muestrario-sub {
   font-size: 0.75rem;
   color: var(--muted);
