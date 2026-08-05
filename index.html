@@ -1946,6 +1946,12 @@ document.addEventListener("keydown", e => {
   if (e.key === "Escape") closeModal();
 });
 
+document.getElementById("search").addEventListener("keydown", e => {
+  if (e.key === "Enter") {
+    e.target.blur();
+  }
+});
+
 document.getElementById("search").addEventListener("input", e => { busqueda = e.target.value; render(); });
 document.getElementById("footer-wa").href = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent("Hola! Vi su catálogo y quiero más información.")}`;
 document.getElementById("muestrario-wa").addEventListener("click", () => {
