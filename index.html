@@ -133,7 +133,6 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 0.5rem;
-  background-image: url("https://i.ibb.co/Ng00WDWh/banner.jpg");
   background-size: 300px;
   background-repeat: repeat;
   background-position: center;
@@ -145,24 +144,33 @@
   width: 100%;
   position: relative;
   overflow: hidden;
-
-  -webkit-mask-image: radial-gradient(ellipse at center, black 40%, transparent 100%);
-  mask-image: radial-gradient(ellipse at center, black 40%, transparent 100%);
-
+  isolation: isolate;
 }
 
 .muestrario-banner::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(0,0,0,0.55);
-  border-radius: var(--radius);
+
+  background-image: url("https://i.ibb.co/Ng00WDWh/banner.jpg");
+  background-size: 180px;
+  background-repeat: repeat;
+  background-position: center;
+
+  /* Solo la imagen será tenue */
+  opacity: 0.35;
+
+  /* Opcional: desvanecer hacia los bordes */
+  -webkit-mask-image: radial-gradient(circle, black 45%, transparent 100%);
+  mask-image: radial-gradient(circle, black 45%, transparent 100%);
+
+  border-radius: inherit;
+  pointer-events: none;
+
+  z-index: -1;
 }
 
-.muestrario-banner > * {
-  position: relative;
-  z-index: 1;
-}
+
 
 .muestrario-sub {
   font-size: 0.75rem;
@@ -920,9 +928,13 @@
 <section class="hero">
   <h1>Catálogo <em>2026</em></h1>
   <p>Modelos en existencia. Actualizado constantemente.</p>
-<div class="muestrario-banner">
-  ¿Buscas algo en especial? <span class="muestrario-link" id="muestrario-wa">Escríbenos→</span>y pregunta por el modelo que tienes en mente.
+
+  <div class="muestrario-banner">
+  ¿Buscas algo en especial?
+    <span class="muestrario-link" id="muestrario-wa">Escríbenos →</span>
+    y pregunta por el modelo que tienes en mente.
 </div>
+
 </section>
 
   <section class="filters-section" id="filters-section"></section>
