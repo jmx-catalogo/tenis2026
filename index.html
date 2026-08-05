@@ -1722,7 +1722,10 @@ function render() {
     if (filtros.disp === "no" && p.disponible) return false;
 if (filtros.disp === "si" && !p.disponible) return false;
 if (filtros.disp === "oferta" && !p.oferta) return false;
-    if (q && !p.nombre.toLowerCase().includes(q) && !p.marca.toLowerCase().includes(q)) return false;
+    if (q) {
+  const combinado = `${p.marca} ${p.nombre}`.toLowerCase();
+  if (!combinado.includes(q)) return false;
+}
     return true;
   });
 
