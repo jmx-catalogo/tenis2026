@@ -1942,21 +1942,11 @@ document.getElementById("modal-close").addEventListener("click", closeModal);
 document.getElementById("modal-overlay").addEventListener("click", e => {
   if (e.target.id === "modal-overlay") closeModal();
 });
+
 document.getElementById("search").addEventListener("keyup", e => {
   if (e.key === "Enter" || e.keyCode === 13) {
     e.target.blur();
-    // Reset zoom en iOS
-    const meta = document.querySelector("meta[name='viewport']");
-    meta.setAttribute("content", "width=device-width, initial-scale=1, maximum-scale=1");
-    setTimeout(() => {
-      meta.setAttribute("content", "width=device-width, initial-scale=1");
-    }, 300);
-  }
-});
-
-document.getElementById("search").addEventListener("keydown", e => {
-  if (e.key === "Enter") {
-    e.target.blur();
+    window.scrollTo(0, window.scrollY);
   }
 });
 
