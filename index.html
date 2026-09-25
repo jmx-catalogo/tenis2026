@@ -135,31 +135,17 @@
   }
 
 .muestrario-banner {
+  display: block;
   width: 100%;
-  aspect-ratio: 16 / 9;
-
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-
-  border-radius: 0;
-  overflow: visible;
-
   margin-top: 0.75rem;
-  position: relative;
-  isolation: isolate;
+  cursor: pointer;
 }
 
-.muestrario-banner::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: url("https://i.ibb.co/GKcs7s9/Buscas-algo-que-no-encuentras-2.png");
-  background-size: cover;
-  background-position: center;
-  opacity: 1;
+.muestrario-banner img {
+  display: block;
+  width: 100%;
+  height: auto;
   border-radius: 0;
-  z-index: 0;
 }
 
 .muestrario-sub {
@@ -925,14 +911,13 @@ footer a {
 
 <main>
 <section class="hero">
-  <h1>Catálogo <em>2026</em></h1>
-  <p>Modelos en existencia. Actualizado constantemente.</p>
 
-  <div class="muestrario-banner">
-  ¿Buscas algo en especial?
-    <span class="muestrario-link" id="muestrario-wa">Escríbenos →</span>
-    y pregunta por el modelo que tienes en mente.
-</div>
+<a class="muestrario-banner" id="muestrario-wa">
+  <img
+    src="https://i.ibb.co/ZpZWGcwS/Buscas-algo-que-no-encuentras.png"
+    alt="Escríbenos por WhatsApp para solicitar un modelo"
+  >
+</a>
 
 </section>
 
@@ -2019,7 +2004,7 @@ document.getElementById("search").addEventListener("keyup", e => {
 
 document.getElementById("search").addEventListener("input", e => { busqueda = e.target.value; render(); });
 document.getElementById("muestrario-wa").addEventListener("click", () => {
-  window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent("Hola! Estoy buscando un modelo en especial y quisiera saber si pueden conseguírmelo.")}`, "_blank");
+  window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent("Hola! Estoy buscando un modelo en especial y quisiera saber si pueden conseguírmelo")}`, "_blank");
 });
 
 // como pedir
