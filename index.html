@@ -150,7 +150,29 @@
   display: block;
   width: 100%;
   height: auto;
-  border-radius: 0;
+}
+
+/* Por defecto: escritorio */
+.banner-desktop {
+  display: block !important;
+}
+
+.banner-mobile {
+  display: none !important;
+}
+
+
+/* CELULAR */
+@media (max-width: 600px) {
+
+  .banner-desktop {
+    display: none !important;
+  }
+
+  .banner-mobile {
+    display: block !important;
+  }
+
 }
 
 .muestrario-sub {
@@ -923,11 +945,23 @@ footer a {
 
 <a class="muestrario-banner" id="muestrario-wa">
   <img
-    src="https://i.ibb.co/ZpZWGcwS/Buscas-algo-que-no-encuentras.png"
+    src="https://i.ibb.co/VY9Xzbq3/Buscas-algo-que-no-encuentras-2.png"
     alt="Escríbenos por WhatsApp para solicitar un modelo"
   >
+
+   <img
+    class="banner-mobile"
+    src="URL-BANNER-MOBILE.png"
+    alt="Escríbenos por WhatsApp para solicitar un modelo"
+  >
+
 </a>
 
+ <img
+    class="banner-mobile"
+    src="URL-BANNER-MOBILE.png"
+    alt="Escríbenos por WhatsApp para solicitar un modelo"
+  >
 </section>
 
   <section class="filters-section" id="filters-section"></section>
