@@ -158,23 +158,12 @@
   content: "";
   position: absolute;
   inset: 0;
-
-  background-image: url("https://i.ibb.co/Ng00WDWh/banner.jpg");
-  background-size: 180px;
-  background-repeat: repeat;
+  background-image: url("https://i.ibb.co/My9HW7mw/Buscas-algo-que-no-encuentras.png");
+  background-size: cover;
   background-position: center;
-
-  /* Solo la imagen será tenue */
-  opacity: 0.45;
-
-  /* Opcional: desvanecer hacia los bordes */
-  -webkit-mask-image: radial-gradient(circle, black 45%, transparent 100%);
-  mask-image: radial-gradient(circle, black 45%, transparent 100%);
-
-  border-radius: inherit;
-  pointer-events: none;
-
-  z-index: -1;
+  border-radius: var(--radius);
+  opacity: 0.6;
+  z-index: 0;
 }
 
 .muestrario-sub {
