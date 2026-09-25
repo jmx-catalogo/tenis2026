@@ -2020,7 +2020,6 @@ document.getElementById("search").addEventListener("keyup", e => {
 });
 
 document.getElementById("search").addEventListener("input", e => { busqueda = e.target.value; render(); });
-document.getElementById("footer-wa").href = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent("Hola! Vi su catálogo y quiero más información.")}`;
 document.getElementById("muestrario-wa").addEventListener("click", () => {
   window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent("Hola! Estoy buscando un modelo en especial y quisiera saber si pueden conseguírmelo.")}`, "_blank");
 });
